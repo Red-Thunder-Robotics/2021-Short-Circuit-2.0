@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -60,6 +61,9 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     differentialRocketLeagueDrive.arcadeDrive(speed, turn);
+
+    SmartDashboard.putNumber("Turn", turn);
+    SmartDashboard.putNumber("Speed", speed);
    }
 
   public DriveSubsystem() {
