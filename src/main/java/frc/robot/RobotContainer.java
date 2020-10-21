@@ -9,9 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,11 +26,41 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
+  //Autonmous commmands
+  Command m_autonomousCommand;
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+  //Commands
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  // Creating controller(s)
 
+  GenericHID driverController = new XboxController(Constants.DRIVE_CONTROLLER);
+
+  //Creating buttons for controller(s)
+
+  Button A_Button = new JoystickButton(driverController, 1);  
+  Button B_Button = new JoystickButton(driverController, 2);
+  Button X_Button = new JoystickButton(driverController, 3);
+  Button Y_Button = new JoystickButton(driverController, 4);
+  Button LB_Button = new JoystickButton(driverController, 5);
+  Button RB_Button = new JoystickButton(driverController, 6);
+  Button Select_Button = new JoystickButton(driverController, 7);
+  Button Start_Button = new JoystickButton(driverController, 8);
+  Button Left_Stick_Button = new JoystickButton(driverController, 9);
+  Button Right_Stick_Button = new JoystickButton(driverController, 10);
+
+  // A method to run the rumble on the Xbox Controller if we wish
+
+  public void setRumble(double rumble){
+    driverController.setRumble(RumbleType.kLeftRumble, rumble);
+    driverController.setRumble(RumbleType.kRightRumble, rumble);
+
+  }
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -33,6 +68,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // Added Shuffleboard tab to seleect autonomous on
+    
+    Shuffleboard.getTab("Autonomous").add(m_chooser);
   }
 
   /**
